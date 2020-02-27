@@ -15,7 +15,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         Log.d(TAG, "onCreate Called")
 
-        if (savedInstanceState == null){
+        val bundle = intent.getStringExtra("login")
+        Log.d(TAG, "bundle" + bundle)
+
+        if (savedInstanceState == null && bundle != "success"){
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
