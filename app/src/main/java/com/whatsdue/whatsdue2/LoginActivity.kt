@@ -30,8 +30,8 @@ class LoginActivity : AppCompatActivity() {
         Log.d(TAG, "onCreate called")
 
         val retrofit = RetrofitClient.instance
-        var userName = findViewById<EditText>(R.id.userNameText)
-        var userPassword = findViewById<EditText>(R.id.userPassword)
+        val userName = findViewById<EditText>(R.id.userNameText)
+        val userPassword = findViewById<EditText>(R.id.userPassword)
         val loginButton = findViewById<Button>(R.id.loginButton)
 
         myAPI = retrofit.create(INodeJS::class.java)
@@ -48,9 +48,10 @@ class LoginActivity : AppCompatActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { message ->
                 if(message.contains("username")) {
-                    var jsonString = message.toString()
+                    val jsonString = message.toString()
                     val intent = Intent(this, MainActivity::class.java)
                     intent.putExtra("value", jsonString)
+                    intent.putExtra("login", "success")
                     loadCourses()
                     startActivity(intent)
                     finish()
@@ -73,7 +74,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun loadCourses() {
-        var i: List<Course?>? = null;
+//        var i: List<Course?>? = null
         CourseServiceFactory.makeService().getCoursesList().enqueue(object: Callback<Wrapper?> {
             override fun onFailure(call: Call<Wrapper?>, t: Throwable) {
                 Toast.makeText(this@LoginActivity, "WTF ", Toast.LENGTH_LONG).show()
