@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.whatsdue.whatsdue2" android:targetSandboxVersion="1">
+    package="com.whatsdue.whatsdue2">
 
     <!-- These are the bluetooth requirements for the app -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <!-- Allows android app to access internet   -->
     <uses-permission android:name="android.permission.INTERNET"/>
-
-
 
     <uses-feature
         android:name="android.hardware.bluetooth_le"
@@ -43,10 +41,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".BeaconActivity" />
-
-
+        <activity
+            android:name=".BeaconTestActivity"
+            android:label="Beacon Test"
+            android:parentActivityName=".MainActivity" />
     </application>
 
-
 </manifest>
-

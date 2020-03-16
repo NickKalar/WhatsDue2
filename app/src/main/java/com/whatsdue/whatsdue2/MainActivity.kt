@@ -5,7 +5,10 @@ import android.content.Intent
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Message
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ListView
 import android.widget.Toast
 import com.google.android.gms.nearby.Nearby
@@ -68,6 +71,26 @@ class MainActivity : AppCompatActivity() {
 //                t.show()
 //            }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.mainmenu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        var intent = Intent(this, this::class.java)
+
+        when (item.itemId) {
+            R.id.classList ->
+                intent = Intent(this, MainActivity::class.java)
+            R.id.beaconTest ->
+                intent = Intent(this, BeaconTestActivity::class.java)
+        }
+
+        startActivity(intent)
+        finish()
+        return true
     }
 
     override fun onStart() {
