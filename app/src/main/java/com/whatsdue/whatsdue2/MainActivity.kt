@@ -7,6 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ListView
+import android.widget.Toast
+import com.google.android.gms.nearby.Nearby
+import com.google.android.gms.nearby.messages.Distance
+import com.google.android.gms.nearby.messages.Message
+import com.google.android.gms.nearby.messages.MessageListener
+import com.whatsdue.whatsdue2.beacon.BeaconScan
 import kotlinx.android.synthetic.main.activity_main.*
 import java.net.URL
 import kotlin.properties.Delegates
@@ -48,7 +54,19 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         } else {
+            Nearby.getMessagesClient(this).subscribe(Listener)
             downloadData.execute("http://www.whatsdue.net/tes.xml")
+//            Toast.makeText(this.applicationContext, "Beacon(s) being searched for", Toast.LENGTH_SHORT).show()
+//            if (BeaconScan.start(this)) {
+//                Log.d(TAG, "BeaconScan Success")
+//                val t = Toast.makeText(this.applicationContext, "Beacon(s) found. Classes Loaded", Toast.LENGTH_LONG)
+//                t.show()
+//                downloadData.execute("http://www.whatsdue.net/tes.xml")
+//            } else {
+//                Log.d(TAG, "BeaconScan failed")
+//                val t = Toast.makeText(this.applicationContext, "Beacon(s) NOT found. Classes NOT Loaded", Toast.LENGTH_LONG)
+//                t.show()
+//            }
         }
     }
 
@@ -130,4 +148,34 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    private val Listener = object : MessageListener() {
+        override fun onFound(m: Message?) {
+            super.onFound(m)
+            m?.let {
+                Log.i(TAG, "Found BLE: ${m.namespace}")
+                Toast.makeText(this@MainActivity.applicationContext, "Beacon(s) found. Classes Loaded", Toast.LENGTH_LONG).show()
+                println("Message found")
+                // Activate Parser
+
+            }
+
+        }
+
+        override fun onLost(p0: Message?) {
+            super.onLost(p0)
+            Log.e(TAG, "Cannot find BLE / BLE Messages")
+            Toast.makeText(this@MainActivity.applicationContext, "No Beacons Nearby, You Have No Courses As a Result", Toast.LENGTH_LONG).show()
+        }
+
+        override fun onDistanceChanged(m: Message?, p1: Distance?) {
+            super.onDistanceChanged(m, p1)
+            Toast.makeText(this@MainActivity.applicationContext, "Beacon Found, distance: ${p1!!.meters}", Toast.LENGTH_SHORT).show();
+//            m?.let {
+//
+//            }
+        }
+    }
+
+
 }

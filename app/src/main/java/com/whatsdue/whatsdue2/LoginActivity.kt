@@ -52,7 +52,7 @@ class LoginActivity : AppCompatActivity() {
                     val intent = Intent(this, MainActivity::class.java)
                     intent.putExtra("value", jsonString)
                     intent.putExtra("login", "success")
-                    loadCourses()
+//                    loadCourses()
                     startActivity(intent)
                     finish()
                 }
