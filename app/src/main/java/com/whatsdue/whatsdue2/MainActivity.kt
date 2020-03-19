@@ -1,5 +1,6 @@
 package com.whatsdue.whatsdue2
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
@@ -39,9 +40,19 @@ class FeedEntry {
     }
 }
 
+object Values {
+    var beaconNameText = "Test Name"
+    var beaconDistanceText = 2.7
+    var beaconAccuracyText = 83.2
+}
+
+
+
 class MainActivity : AppCompatActivity() {
+
     private val TAG = "MainActivity"
     private val downloadData by lazy {DownloadData(this, courseListView)}
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +81,8 @@ class MainActivity : AppCompatActivity() {
 //                t.show()
 //            }
         }
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -83,9 +96,12 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.classList ->
                 intent = Intent(this, MainActivity::class.java)
-            R.id.beaconTest ->
+            R.id.beaconTest -> {
                 intent = Intent(this, BeaconTestActivity::class.java)
+//                Nearby.getMessagesClient(this).unsubscribe(Listener)
+            }
         }
+
 
         startActivity(intent)
         finish()
@@ -99,7 +115,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        Nearby.getMessagesClient(this).subscribe(Listener)
         Log.d(TAG, "onResume called")
     }
 
@@ -129,6 +144,7 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         Log.d(TAG, "onDestroy called")
         downloadData.cancel(true)
+
     }
 
     companion object {
@@ -195,9 +211,10 @@ class MainActivity : AppCompatActivity() {
             super.onDistanceChanged(m, p1)
 //            Toast.makeText(this@MainActivity.applicationContext, "Beacon Found, distance: ${p1!!.meters}", Toast.LENGTH_SHORT).show();
 //            println("Beacon Found, distance: ${p1!!.meters * 52.63} meters with an accuracy of ${p1.accuracy}")
-            BeaconTestActivity.beaconNameText = m!!.namespace.toString()
-            BeaconTestActivity.beaconDistanceText = p1!!.meters * 52.63
-            BeaconTestActivity.beaconAccuracyText = p1.accuracy.toDouble()
+//            Values.beaconNameText = m!!.namespace.toString()
+//            Values.beaconDistanceText = p1!!.meters * 52.63
+//            Values.beaconAccuracyText = p1.accuracy.toDouble()
+
 //            m?.let {
 //
 //            }
