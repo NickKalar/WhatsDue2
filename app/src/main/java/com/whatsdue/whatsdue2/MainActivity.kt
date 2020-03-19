@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Message
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -100,6 +99,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        Nearby.getMessagesClient(this).subscribe(Listener)
         Log.d(TAG, "onResume called")
     }
 
@@ -176,7 +176,7 @@ class MainActivity : AppCompatActivity() {
         override fun onFound(m: Message?) {
             super.onFound(m)
             m?.let {
-                Log.i(TAG, "Found BLE: ${m.namespace}")
+                Log.i(TAG, "Found BLE: ${String(m.content)}")
                 Toast.makeText(this@MainActivity.applicationContext, "Beacon(s) found. Classes Loaded", Toast.LENGTH_LONG).show()
                 println("Message found")
                 // Activate Parser
@@ -193,7 +193,11 @@ class MainActivity : AppCompatActivity() {
 
         override fun onDistanceChanged(m: Message?, p1: Distance?) {
             super.onDistanceChanged(m, p1)
-            Toast.makeText(this@MainActivity.applicationContext, "Beacon Found, distance: ${p1!!.meters}", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this@MainActivity.applicationContext, "Beacon Found, distance: ${p1!!.meters}", Toast.LENGTH_SHORT).show();
+//            println("Beacon Found, distance: ${p1!!.meters * 52.63} meters with an accuracy of ${p1.accuracy}")
+            BeaconTestActivity.beaconNameText = m!!.namespace.toString()
+            BeaconTestActivity.beaconDistanceText = p1!!.meters * 52.63
+            BeaconTestActivity.beaconAccuracyText = p1.accuracy.toDouble()
 //            m?.let {
 //
 //            }

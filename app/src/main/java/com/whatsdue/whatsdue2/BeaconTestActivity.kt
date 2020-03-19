@@ -8,9 +8,13 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 class BeaconTestActivity : AppCompatActivity() {
-    var beaconNameText = "Test Name"
-    var beaconDistanceText = 2.7
-    var beaconAccuracyText = 83.2
+
+    companion object {
+        var beaconNameText = "Test Name"
+        var beaconDistanceText = 2.7
+        var beaconAccuracyText = 83.2
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
