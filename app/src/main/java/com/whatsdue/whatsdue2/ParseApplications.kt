@@ -16,7 +16,6 @@ class ParseApplications {
         Log.d(TAG, "parse called with $xmlData")
         var status = true
         var inEntry = false
-        var gotImage = false
         var textValue = ""
 
         try {
@@ -33,11 +32,6 @@ class ParseApplications {
                         Log.d(TAG, "parse: Starting tag for $tagName")
                         if (tagName == "course") {
                             inEntry = true
-                        } else if ((tagName == "image") && inEntry) {
-                            val imageResolution = xpp.getAttributeValue(null, "height")
-                            if (imageResolution.isNotEmpty()) {
-                                gotImage = (imageResolution == "53")
-                            }
                         }
                     }
                     XmlPullParser.TEXT -> textValue = xpp.text
@@ -53,9 +47,11 @@ class ParseApplications {
                                 }
                                 "title" -> currentRecord.title = textValue
                                 "professor" -> currentRecord.professor = textValue
-                                "time" -> currentRecord.time.add(textValue)
-                                //"summary" -> currentRecord.summary = textValue
-                                //"image" -> if (gotImage) currentRecord.imageURL = textValue
+                                "time" -> currentRecord.time += textValue + " "
+                                "officeHours" -> currentRecord.officeHours += textValue + "\n"
+                                "assignments" -> currentRecord.assignments += textValue + "\n"
+                                "test" -> currentRecord.test += textValue + "\n"
+                                "misc" -> currentRecord.misc += textValue + "\n"
 
                             }
                         }

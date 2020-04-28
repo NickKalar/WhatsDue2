@@ -45,16 +45,22 @@ class BeaconTestActivity : AppCompatActivity() {
         return true
     }
 
+    // function to handle activity switching within the menu
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         var intent = Intent(this, this::class.java)
 
         when (item.itemId) {
             R.id.classList ->
                 intent = Intent(this, MainActivity::class.java)
-            R.id.beaconTest ->
+            R.id.beaconTest -> {
                 intent = Intent(this, BeaconTestActivity::class.java)
+//                Nearby.getMessagesClient(this).unsubscribe(Listener)
+            }
+            R.id.courseView ->
+                intent = Intent(this, CourseActivity::class.java)
         }
 
+        intent.putExtra("login", "success")
         startActivity(intent)
         finish()
         return true

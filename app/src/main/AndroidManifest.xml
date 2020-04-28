@@ -45,6 +45,10 @@
             android:name=".BeaconTestActivity"
             android:label="Beacon Test"
             android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".CourseActivity"
+            android:label="Course"
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>

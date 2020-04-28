@@ -5,6 +5,9 @@
         android:id="@+id/classList"
         android:title="@string/class_list" />
     <item
+        android:id="@+id/courseView"
+        android:title="View Course" />
+    <item
         android:id="@+id/beaconTest"
         android:title="@string/beacon_distance_test" />
 </menu>
